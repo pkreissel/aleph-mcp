@@ -47,12 +47,21 @@ concluding two records describe the same person.
 
 READ_ONLY = ToolAnnotations(read_only_hint=True, destructive_hint=False, open_world_hint=True)
 
+LOG_LEVELS = ("DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL")
+LOG_LEVEL = os.environ.get("ALEPH_MCP_LOG_LEVEL", "WARNING").upper()
+if LOG_LEVEL not in LOG_LEVELS:
+    LOG_LEVEL = "WARNING"
+
+# Constructing MCPServer configures the root logger, so the level has to be
+# handed over here: a later basicConfig() would be a no-op against the handler
+# it installs, and ALEPH_MCP_LOG_LEVEL would be silently ignored.
 mcp: MCPServer = MCPServer(
     name="aleph",
     title="Aleph",
     version="0.1.0",
     instructions=INSTRUCTIONS,
     website_url="https://openaleph.org",
+    log_level=LOG_LEVEL,
 )
 
 _client: AlephReadClient | None = None
@@ -389,10 +398,7 @@ async def aleph_fetch_document_text(
 
 
 def main() -> None:
-    logging.basicConfig(
-        level=os.environ.get("ALEPH_MCP_LOG_LEVEL", "WARNING").upper(),
-        format="%(levelname)s %(name)s: %(message)s",
-    )
+    logging.getLogger().setLevel(LOG_LEVEL)
     mcp.run(transport="stdio")
 
 
