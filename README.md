@@ -1,5 +1,13 @@
 # aleph-mcp
 
+> [!WARNING]
+> **This is a Claude one-shot.** The whole thing — server, formatters, tests,
+> this README — was written by Claude in a single session, and has had no human
+> review beyond the author reading it over. It works against a live instance
+> (that much was verified), but treat it as a starting point rather than
+> something battle-tested. Read the code before you point it at anything you
+> care about.
+
 A read-only MCP server for [Aleph](https://github.com/alephdata/aleph), the
 open-source investigative data platform that holds leaks, company registries,
 court records, sanctions lists and document archives. It gives an MCP client ten
@@ -23,7 +31,7 @@ Three ways, depending on how permanent you want it.
 throwaway environment — nothing is left behind:
 
 ```bash
-uvx --from git+https://github.com/YOUR-USER/aleph-mcp aleph-mcp
+uvx --from git+https://github.com/pkreissel/aleph-mcp aleph-mcp
 ```
 
 From a local checkout, the same thing without the clone:
@@ -37,7 +45,7 @@ That is also the least-effort MCP client entry — no venv path to keep valid:
 ```bash
 claude mcp add aleph \
   --env ALEPH_HOST=https://search.openaleph.org \
-  -- uvx --from git+https://github.com/YOUR-USER/aleph-mcp aleph-mcp
+  -- uvx --from git+https://github.com/pkreissel/aleph-mcp aleph-mcp
 ```
 
 Startup pays a few seconds the first time while `uv` resolves and caches the
@@ -48,7 +56,7 @@ dependencies; later runs are fast.
 Persistent, on your `PATH`, still isolated:
 
 ```bash
-uv tool install git+https://github.com/YOUR-USER/aleph-mcp
+uv tool install git+https://github.com/pkreissel/aleph-mcp
 ```
 
 `aleph-mcp` is then on your `PATH` and speaks MCP over stdio — point a client
@@ -59,7 +67,7 @@ at it by name rather than by path.
 For development, or if you want the source on hand:
 
 ```bash
-git clone https://github.com/YOUR-USER/aleph-mcp
+git clone https://github.com/pkreissel/aleph-mcp
 cd aleph-mcp
 uv venv
 uv pip install -e .
