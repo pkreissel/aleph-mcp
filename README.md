@@ -23,9 +23,8 @@ can present it as safe.
 
 ## Quickstart
 
-Drop this in your MCP client's config — no clone, no venv, no API key. `uvx`
-fetches and runs the server on demand, and the default instance
-([OpenAleph](https://search.openaleph.org)) answers anonymously:
+Drop this in your MCP client's config — no clone, no venv. `uvx` fetches and
+runs the server on demand:
 
 ```json
 {
@@ -33,17 +32,26 @@ fetches and runs the server on demand, and the default instance
     "aleph": {
       "command": "uvx",
       "args": ["--from", "git+https://github.com/pkreissel/aleph-mcp", "aleph-mcp"],
-      "env": { "ALEPH_HOST": "https://search.openaleph.org" }
+      "env": {
+        "ALEPH_HOST": "https://search.openaleph.org",
+        "ALEPH_API_KEY": ""
+      }
     }
   }
 }
 ```
+
+Leave `ALEPH_API_KEY` empty and it runs anonymously, which is enough for the
+default instance ([OpenAleph](https://search.openaleph.org)). Point `ALEPH_HOST`
+at an instance that needs credentials and paste the key in — that is the only
+change.
 
 The same thing from the Claude Code CLI:
 
 ```bash
 claude mcp add aleph \
   --env ALEPH_HOST=https://search.openaleph.org \
+  --env ALEPH_API_KEY= \
   -- uvx --from git+https://github.com/pkreissel/aleph-mcp aleph-mcp
 ```
 

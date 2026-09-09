@@ -63,7 +63,9 @@ def get_client() -> AlephReadClient:
     global _client
     if _client is None:
         host = os.environ.get("ALEPH_HOST") or DEFAULT_HOST
-        api_key = os.environ.get("ALEPH_API_KEY")
+        # "" is a likely value (an env var declared but left blank); alephclient
+        # would turn it into a malformed "ApiKey " header, so normalise it away.
+        api_key = os.environ.get("ALEPH_API_KEY") or None
         if not api_key:
             log.info(
                 "ALEPH_API_KEY is not set; %s will only return what it exposes "

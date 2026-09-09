@@ -8,10 +8,10 @@
         "aleph-mcp"
       ],
       "env": {
-        "ALEPH_HOST": "https://search.openaleph.org"
+        "ALEPH_HOST": "https://search.openaleph.org",
+        "ALEPH_API_KEY": ""
       }
     },
-
     "aleph-private": {
       "command": "uvx",
       "args": [
