@@ -150,6 +150,27 @@ Against a checkout rather than `uvx` — see the [Quickstart](#quickstart) for t
 }
 ```
 
+### Hermes Agent
+
+Hermes keeps its servers in `~/.hermes/config.yaml`, under a top-level
+`mcp_servers:` key — YAML rather than JSON, and note the underscore:
+
+```yaml
+mcp_servers:
+  aleph:
+    command: "uvx"
+    args: ["--from", "git+https://github.com/pkreissel/aleph-mcp", "aleph-mcp"]
+    env:
+      ALEPH_HOST: "https://search.openaleph.org"
+      ALEPH_API_KEY: ""
+```
+
+Then `/reload-mcp` in a session to pick it up without a restart. Hermes
+namespaces tools as `mcp_<server>_<tool>`, so with the server named `aleph`
+they arrive as `mcp_aleph_aleph_search`, `mcp_aleph_aleph_get_entity` and so
+on. Servers are scoped per Hermes profile — if the tools do not show up, check
+you are in the profile you added it to before assuming the install failed.
+
 Several instances at once is just several entries with different `ALEPH_HOST`
 values and distinct server names.
 
