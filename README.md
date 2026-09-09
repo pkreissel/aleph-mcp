@@ -21,9 +21,42 @@ at [OpenAleph](https://search.openaleph.org), which answers without credentials.
 change or delete anything, and each tool is annotated `readOnlyHint` so clients
 can present it as safe.
 
+## Quickstart
+
+Drop this in your MCP client's config — no clone, no venv, no API key. `uvx`
+fetches and runs the server on demand, and the default instance
+([OpenAleph](https://search.openaleph.org)) answers anonymously:
+
+```json
+{
+  "mcpServers": {
+    "aleph": {
+      "command": "uvx",
+      "args": ["--from", "git+https://github.com/pkreissel/aleph-mcp", "aleph-mcp"],
+      "env": { "ALEPH_HOST": "https://search.openaleph.org" }
+    }
+  }
+}
+```
+
+The same thing from the Claude Code CLI:
+
+```bash
+claude mcp add aleph \
+  --env ALEPH_HOST=https://search.openaleph.org \
+  -- uvx --from git+https://github.com/pkreissel/aleph-mcp aleph-mcp
+```
+
+Then ask your client to search for something. [`mcp.json`](mcp.json) in this
+repo is the same config as a file, with a second entry showing a private
+instance and an API key. You need [`uv`](https://docs.astral.sh/uv/) installed
+(`brew install uv`, or `curl -LsSf https://astral.sh/uv/install.sh | sh`); the
+first run takes a few seconds to resolve dependencies, later ones are fast.
+
 ## Install
 
-Three ways, depending on how permanent you want it.
+The Quickstart needs none of this. These are the options if you want the
+server on disk rather than resolved on demand.
 
 ### Run it without installing (uvx)
 
@@ -40,16 +73,8 @@ From a local checkout, the same thing without the clone:
 uvx --from /path/to/aleph-mcp aleph-mcp
 ```
 
-That is also the least-effort MCP client entry — no venv path to keep valid:
-
-```bash
-claude mcp add aleph \
-  --env ALEPH_HOST=https://search.openaleph.org \
-  -- uvx --from git+https://github.com/pkreissel/aleph-mcp aleph-mcp
-```
-
-Startup pays a few seconds the first time while `uv` resolves and caches the
-dependencies; later runs are fast.
+This is what the [Quickstart](#quickstart) config runs, and it keeps no venv
+path that can go stale when you move the checkout.
 
 ### Install as a tool
 
@@ -99,6 +124,9 @@ claude mcp add aleph \
 ```
 
 ### Any client using `mcpServers` JSON
+
+Against a checkout rather than `uvx` — see the [Quickstart](#quickstart) for the
+`uvx` form:
 
 ```json
 {

@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "aleph": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/pkreissel/aleph-mcp",
+        "aleph-mcp"
+      ],
+      "env": {
+        "ALEPH_HOST": "https://search.openaleph.org"
+      }
+    },
+
+    "aleph-private": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/pkreissel/aleph-mcp",
+        "aleph-mcp"
+      ],
+      "env": {
+        "ALEPH_HOST": "https://your-instance.org",
+        "ALEPH_API_KEY": "your-key"
+      }
+    }
+  }
+}
